@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>HEROSTORY JS </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="mustache.js"></script>
+    <script type="text/javascript" src="stackmob-js-0.9.1-bundled-min.js"></script>
+
+    <!-- Example Dependencies -->
+    <script type="text/javascript" src="http://static.stackmob.com/resources/js/jsonFormatter-0.1.0-min.js"></script>
+
+    <!-- Example Code -->
+    <script type="text/javascript">
+      // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
+      // Your other app information is here: https://dashboard.stackmob.com/settings
+      StackMob.init({
+        publicKey: '2efceebc-6c66-4367-b065-c0625354d679',
+        apiVersion : 0
+      });
+
+      // Show alert if StackMob has not been initialized
+      $(document).ready(function () {
+        if (StackMob.publicKey == "your_public_key") {
+          $("#init").show();
+        }
+      });
+
+    </script>
+
+    <script type="text/javascript" src="examples.js"></script>
+    
+    <script type="text/javascript" src="moment.min.js"></script>
+    <script type="text/javascript" src="lang/ko.js"></script>
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
+    <style type="text/css">
+      /* <![CDATA[ */
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      #init {
+        display: none;
+        background-color: #FDD;
+        border: 1px solid #FBB;
+        padding: 0 20px;
+      }
+      .left {
+        width: 100%;
+      }
+      #results-container {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: #FFF;
+        border: 1px solid #CCC;
+        padding: 10px;
+      }
+      #command-container {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background-color: #FFF;
+        border: 1px solid #CCC;
+        padding: 10px;
+      }
+      /* ]]> */
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#write/">글쓰기</a></li>
+          <li><div id="login_info"></div>
+            <script id="mustache_login" type="text/template">
+            <img src="{{maincharacter.avatarimageurl}}" width="30" class="pull-left img-circle"> <B>[{{maincharacter.servername}}] {{maincharacter.charactername}} </B>
+            </script>
+            
+          </li>
+          <li><a id="logout">로그아웃</a></li>
+        </ul>
+        <h3 class="muted">Herostory</h3>
+      </div>
+      <hr>
+
+      <div class="container-narrow" id="login_container">
+
+        <form class="form-signin">
+          <h2 class="form-signin-heading">로그인 해주세요.</h2>
+          <input type="text" class="input-block-level" placeholder="Email address" id="login_email" value="sohnkh@gmail.com">
+          <input type="password" class="input-block-level" placeholder="Password" id="login_password" value="1481516">
+          <label class="checkbox">
+            <input type="checkbox" value="true" id="keepLoggedIn"> 로그인 유지
+          </label>
+          <button class="btn btn-large btn-primary" id="login" type="submit">로그인</button>
+        </form>
+
+      </div> <!-- /container -->
+      <div class="row-fluid" id="post_write_container">
+        <form>Insert Your Talk.<br><br>
+          <textarea class="input-block-level" id="post_write_textarea"></textarea>
+          <button class="btn btn-large btn-primary" id="hs_post_write" type="submit">글쓰기</button>
+        </form>
+      </div>
+      <div class="container-narrow" id="post_read_container">
+      </div>
+
+
+      <script id="mustache_post_read" type="text/template">
+        <div class="row-fluid">
+          <div class="span8">
+            <img src="{{character.avatarimageurl}}" width="60" class="pull-left img-circle"> 
+            [{{character.servername}}] {{character.charactername}} <br> 
+            {{character.classname}} / {{charactername.level}} <br>
+            {{#formateCreatedDate}} {{/formateCreatedDate}} 
+            <br>
+
+            <div class="well">{{text}}<br><br><img src="{{#showImageUrl}}{{/showImageUrl}}"></div>
+
+            짱입니다. : {{like_count}} 개<br>
+            댓글들 {{comment_count}} 개
+            <table class="table table-hover table-bordered table-condensed table-striped">
+              <tbody>
+                {{#comments}}
+                <tr>
+                  <td>
+                    <img src="{{character.avatarimageurl}}" width="40" class="pull-left img-circle"> [{{character.servername}}] {{character.charactername}} </td>
+                  <td>{{text}}</td>
+                  <td>{{#formateCreatedDate}} {{/formateCreatedDate}} </td>
+                </tr>
+                {{/comments}}
+              </tbody>
+            </table>
+          </div>
+          <div class="span4">
+            
+            <div class="well">
+              <h4>herostory</h4>
+              <p>Enjoy Game through Moile</p>
+              <p>
+                <a class="btn btn-primary btn-large">Download NOW</a> 
+              </p>
+            </div>
+          </div>
+          
+        </div>
+      </script>
+      
+      
+      <div class="footer">
+        <p>&copy; funflow,Inc. 2013 </p>
+      </div>
+
+      
+      <div id="command-container" class="span4"  style="display:none;">
+        
+        <h1>Commands</h1>
+
+        <div id="fb-root"></div>
+
+
+        <h2>Herostory</h2>
+        <ul>
+          <li><a id="hs_posts_read" href="javascript:void(0);">hs_posts_read</a></li>
+          <li><a id="hs_post_write" href="javascript:void(0);">Call post_Write custom code</a></li>
+          <li><a id="hs_comment_write" href="javascript:void(0);">Call post_comment custom code</a></li>
+          
+        </ul>
+
+        <h2>User CRUD</h2>
+        <ul>
+          <li><a id="user_create" href="javascript:void(0);">Create User: Bruce Wayne</a></li>
+          <li><a id="user_read" href="javascript:void(0);">Read User: Bruce Wayne</a></li>
+          <li><a id="user_update" href="javascript:void(0);">Update User: Bruce Wayne turns 51</a></li>
+          <li><a id="user_delete" href="javascript:void(0);">Delete user: Bruce Wayne</a></li>
+        </ul>
+
+        <h2>Login/Logout</h2>
+        <ul>
+          <li><a id="login" href="javascript:void(0);">Login (make sure Bruce Wayne from above is created first)</a></li>
+          <li><a id="logout" href="javascript:void(0);">Logout (make sure Bruce Wayne from above is logged in first)</a></li>
+        </ul>
+
+        <h2>Array Methods: (append/remove/append+create)</h2>
+        <p>
+          This assumes you have a <code>user</code> schema that has a <code>messages</code> field.
+          The <code>messages</code> field is an array of <code>message</code> objects.  The <code>message</code> object
+          has a String field called <code>content</code>.
+        </p>
+        <ul>
+          <li><a id="rel_createuser" href="javascript:void(0);">Create User "Mr Rogers"</a></li>
+          <li><a id="rel_getuser" href="javascript:void(0);">Get User "Mr Rogers"</a></li>
+          <li><a id="rel_appendandcreate" href="javascript:void(0);">Create Messages and append to Mr. Rogers' <code>messages</code> array in one call</a></li>
+          <li><a id="rel_appendandsave" href="javascript:void(0);">Add existing messages to Mr. Rogers' <code>messages</code> array</a></li>
+          <li><a id="rel_getuserexpanded" href="javascript:void(0);">Get Expanded User "Mr Rogers"</a></li>
+          <li><a id="rel_deleteandsave" href="javascript:void(0);">Remove messages from Mr. Rogers, but don't delete message data in one call.</a></li>
+          <li><a id="rel_harddeleteandsave" href="javascript:void(0);">Remove messages from Mr. Rogers and delete the messages as well in one call</a></li>
+
+          <li><a id="rel_deleteuser" href="javascript:void(0);">Delete User "Mr Rogers"</a></li>
+          <li><a id="rel_getmsgs" href="javascript:void(0);">Get All Messages</a></li>
+          <li><a id="rel_deletemsgs" href="javascript:void(0);">Delete all messages</a></li>
+
+
+        </ul>
+
+        <h2>Binary File Upload (S3 Integration)</h2>
+
+        <table>
+          <tr>
+            <td>File to Encode:</td>
+            <td><input type="file" id="files" name="files[]" multiple /></td>
+          </tr>
+        </table>
+
+      </div>
+
+      <div id="results-container" style="display:none;">
+        <h3>Query Results:</h3>
+        <div>(results also displayed in your FireBug/Developer Tools JS console)</div>
+        <textarea id="results" class="input-block-level" rows="25" cols="55"></textarea>
+      </div>
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
+
