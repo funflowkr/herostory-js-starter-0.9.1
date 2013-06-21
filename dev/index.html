@@ -159,7 +159,7 @@
           <li class="active"><a href="#write/">글쓰기</a></li>
           <li><div id="login_info"></div>
             <script id="mustache_login" type="text/template">
-            <img src="{{maincharacter.avatarimageurl}}" width="30" class="pull-left img-circle"> <B>[{{maincharacter.servername}}] {{maincharacter.charactername}} </B>
+            <img src="{{maincharacter.avatarimageurl}}" class="pull-left img-circle" style="width:30px" hspace=5> <B>[{{maincharacter.servername}}] {{maincharacter.charactername}} </B>
             </script>
             
           </li>
@@ -196,12 +196,12 @@
       <script id="mustache_post_read" type="text/template">
         <div class="row-fluid">
           <div class="span8">
-            <img src="{{character.avatarimageurl}}" width="60" class="pull-left img-circle"> 
+            <img src="{{character.avatarimageurl}}" class="pull-left img-circle" style="width:60px" hspace=10> 
             [{{character.servername}}] {{character.charactername}} <br> 
             {{character.classname}} / {{charactername.level}} <br>
             {{#formateCreatedDate}} {{/formateCreatedDate}} 
             <br>
-
+            <br>
             <div class="well">{{text}}<br><br><img src="{{#showImageUrl}}{{/showImageUrl}}"></div>
 
             짱입니다. : {{like_count}} 개<br>
@@ -211,7 +211,7 @@
                 {{#comments}}
                 <tr>
                   <td>
-                    <img src="{{character.avatarimageurl}}" width="40" class="pull-left img-circle" align = "bottom" border=1 hspace=5> [{{character.servername}}] {{character.charactername}} </td>
+                    <img src="{{character.avatarimageurl}}" class="pull-left img-circle" style="width:30px" align = "bottom" border=1 hspace=5> [{{character.servername}}] {{character.charactername}} </td>
                 </tr>
                 <tr>
                   <td>{{text}} - <small> {{#formateCreatedDate}} {{/formateCreatedDate}}</small></td>
