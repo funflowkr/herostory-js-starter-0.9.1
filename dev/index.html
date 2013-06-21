@@ -19,11 +19,30 @@
     <script type="text/javascript">
       // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
       // Your other app information is here: https://dashboard.stackmob.com/settings
-      StackMob.init({
-        "useRelativePathForAjax": true, 
-        publicKey: '2efceebc-6c66-4367-b065-c0625354d679',
-        apiVersion : 0
-      });
+
+      // CORS PROBLEM 
+
+      function isIE () {
+        var myNav = navigator.userAgent.toLowerCase();
+        return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
+      }
+
+      var isie = isIE();
+      if( (isie & isie < 10) | !('withCredentials' in new XMLHttpRequest())){
+        // ie lower version support 
+        StackMob.init({
+          "useRelativePathForAjax": true, 
+          publicKey: '2efceebc-6c66-4367-b065-c0625354d679',
+          apiVersion : 0
+        });
+      } else {
+        StackMob.init({
+          publicKey: '2efceebc-6c66-4367-b065-c0625354d679',
+          apiVersion : 0
+        });
+
+      }
+
 
       // Show alert if StackMob has not been initialized
       $(document).ready(function () {
