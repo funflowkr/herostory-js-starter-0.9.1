@@ -184,7 +184,7 @@
       </div> <!-- /container -->
       <div class="row-fluid" id="post_write_container">
         <form>Insert Your Talk.<br><br>
-          <textarea class="input-block-level" id="post_write_textarea"></textarea>
+          <textarea class="input-block-level" id="post_write_textarea" rows=5></textarea>
           <button class="btn btn-large btn-primary" id="hs_post_write" type="submit">글쓰기</button>
         </form>
       </div>
@@ -210,9 +210,10 @@
                 {{#comments}}
                 <tr>
                   <td>
-                    <img src="{{character.avatarimageurl}}" width="40" class="pull-left img-circle"> [{{character.servername}}] {{character.charactername}} </td>
-                  <td>{{text}}</td>
-                  <td>{{#formateCreatedDate}} {{/formateCreatedDate}} </td>
+                    <img src="{{character.avatarimageurl}}" width="40" class="pull-left img-circle" align = "bottom" border=1 hspace=5> [{{character.servername}}] {{character.charactername}} </td>
+                </tr>
+                <tr>
+                  <td>{{text}} - <small> {{#formateCreatedDate}} {{/formateCreatedDate}}</small></td>
                 </tr>
                 {{/comments}}
               </tbody>
@@ -238,7 +239,20 @@
       </div>
 
       
-      <div id="command-container" class="span4"  style="display:none;">
+
+      <div id="command-container" class="span2"  style="">
+        <h4>Test Link</h4>
+        <ul>
+          <li><a href="#/posts/a954228867e645eb92a0c066defa7f73">글 읽기 1</a></li>
+          <li><a href="#/posts/ba51730c531e42d791c5c622871114a3">글 읽기 2 </a></li>
+          <li><a href="#/posts/2f94d6b153e4476bbcd4b823628b7397">글 읽기 3 </a></li>
+          <li><a href="#/posts/4a1ada0ceb0a40529e54d1cc4283d8bb">글 읽기 4 </a></li>
+          <li><a href="#/write/Developing%20Backbone.js%20Applications&url=https%3A%2F%2Fgithub.com%2Faddyosmani%2Fbackbone-fundamentals&via=addyosmani">글 쓰기 </a></li>
+
+        </ul>
+      </div>
+
+      <div id="command-container-test" class="span4"  style="display:none;">
         
         <h1>Commands</h1>
 

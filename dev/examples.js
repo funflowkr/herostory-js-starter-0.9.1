@@ -55,12 +55,13 @@
           
           getPost: function( id ){ 
               //alert(id); // 121 
-              
+              $('#post_write_container').hide();
               StackMobExamples.readPost(id);
               gRoute = "getpost";
           },
           writePost: function( text ){ 
               //alert(text); // user/images/hey.gif 
+              $('#post_read_container').html("");
               StackMobExamples.writePost(text);
               gRoute = "writepost";
               
