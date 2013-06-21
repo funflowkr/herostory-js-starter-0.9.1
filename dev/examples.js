@@ -57,6 +57,7 @@
               //alert(id); // 121 
               
               StackMobExamples.readPost(id);
+              gRoute = "getpost";
           },
           writePost: function( text ){ 
               //alert(text); // user/images/hey.gif 
@@ -85,12 +86,19 @@
         yes: function(username){
           console.log(username + " is logged in.");
           StackMobExamples.getUserDetail(username);
+          $('#top_logout').show();
+          $('#top_login').hide();
           
         },
         no: function(){
           console.log("No one is currently logged in.");
-          $('#login_container').show();
+          
+          if (gRoute != "getpost") {
+            $('#login_container').show();
+          }
           $('#post_write_container').hide();
+          $('#top_logout').hide();
+          $('#top_login').show();
         }
       });
 
@@ -403,7 +411,16 @@
         location.reload();
       });
     });
+    
+    $(document).ready(function() {
+      $('#show_login').click(function() {
+        $('#login_container').show();
+      });
+    });
+    
   }).call();
+
+
 
 
   /**

@@ -162,7 +162,8 @@
             </script>
             
           </li>
-          <li><a id="logout">로그아웃</a></li>
+          <li id="top_logout"><a id="logout" href="javascript:void(0);">로그아웃</a></li>
+          <li id="top_login"><a id="show_login" href="javascript:void(0);">로그인</a></li>
         </ul>
         <h3 class="muted">Herostory</h3>
       </div>
@@ -172,10 +173,10 @@
 
         <form class="form-signin">
           <h2 class="form-signin-heading">로그인 해주세요.</h2>
-          <input type="text" class="input-block-level" placeholder="Email address" id="login_email" value="sohnkh@gmail.com">
-          <input type="password" class="input-block-level" placeholder="Password" id="login_password" value="1481516">
+          <input type="text" class="input-block-level" placeholder="Email address" id="login_email" value="">
+          <input type="password" class="input-block-level" placeholder="Password" id="login_password" value="">
           <label class="checkbox">
-            <input type="checkbox" value="true" id="keepLoggedIn"> 로그인 유지
+            <input type="checkbox" value="true" id="keepLoggedIn" checked="true"> 로그인 유지
           </label>
           <button class="btn btn-large btn-primary" id="login" type="submit">로그인</button>
         </form>
