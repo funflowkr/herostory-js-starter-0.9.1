@@ -1,6 +1,6 @@
 <html>
 	<head>
-    <title>Your First API Call</title>
+    <title>Your First API Call --- </title>
     <link href="http://www.stackmob.com/platform/favicon.ico" type="image/vnd.microsoft.icon" rel="icon" />
     <link href="http://www.stackmob.com/platform/favicon.png" type="image/png" rel="icon" />
     <link rel="stylesheet" href="index.css" />
@@ -32,60 +32,8 @@
       // Copy your init data from here: https://dashboard.stackmob.com/sdks/js/config
       // Your other app information is here: https://dashboard.stackmob.com/settings
       StackMob.init({
-        publicKey: '2efceebc-6c66-4367-b065-c0625354d679',
+        //publicKey: '2efceebc-6c66-4367-b065-c0625354d679',
         apiVersion : 0
-      });
-      /* ]]> */
-		</script>
-
-		<!--
-		*************************************
-		StackMob JS SDK code that creates and saves a TestObject
-		*************************************
-		-->
-		<script type="text/javascript">
-      /* <![CDATA[ */
-      $(document).ready(function() {
-
-        // Define your class/object
-        var TestObject = StackMob.Model.extend({
-          schemaName : 'testobject' //Tell StackMob to save instances of TestObject to the table "testobject"
-        });
-
-        // Create a local instance of TestObject by passing JSON into the constructor
-        // We have several different field types here as examples.
-        // Fields must be lower case.
-        var to = new TestObject({
-          message : 'This test object instance will show you how StackMob creates your DB from JSON data',
-          integer : 1,
-          decimal : 2.5,
-          istestobject : true,
-          stringarray : ['This', 'is', 'an', 'array', 'of', 'strings'],
-          intarray : [1, 2, 3, 4, 5],
-          decimals : [1.1, 2.2, 3.3],
-          booleans : [true, false, true, false]
-        });
-
-        // Call "create" to fire off the AJAX call to StackMob to create this object instance
-        // If this is the first time StackMob has seen a 'testobject', StackMob will create the database schema automatically for you.
-        // When the server is done, AJAX callbacks are fired: 'success' / 'error'
-        to.create({
-          success : function(model) {
-            // Notice how StackMob auto generated a unique primary key for this object instance under "testobject_id".
-            // Schema primary keys are [schema name]_id
-            // If you specified "testobject_id" in your JSON, StackMob will use your given one instead.
-            console.debug(model.toJSON());
-            $(".error").hide();
-            $(".success").show();
-          },
-          error : function(model, response) {
-            console.debug("Oops there was an error in creating the object.");
-            console.debug("Have you initialized your JS SDK?");
-            console.debug("Are you running this on StackMob's Local Runner?");
-            console.debug("Are you running this on StackMob's GitHub-integrated hosting?")
-            console.debug(response);
-          }
-        });
       });
       /* ]]> */
 		</script>
@@ -93,9 +41,9 @@
 	</head>
 	<body>
     <div class="success">
-  		<h1>Congratulations!</h1>
+  		<h1>Test URL!</h1>
 
-  		<h2> You just ran your first JS SDK call! </h2>
+  		<h2> READ POST ( 글 읽기 ) </h2>
   		<p>
   			It created a new schema in your server-side StackMob database named
   			<code>
