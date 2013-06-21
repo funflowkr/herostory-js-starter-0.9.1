@@ -114,18 +114,18 @@
       // NOTE function(model, result)꼴이 맞는거 아닌가? 
       success: function(model,result) {
         txt = txt || '';
-        console.debug('------- ' + txt + ' success start-----');
+        console.log('------- ' + txt + ' success start-----');
         if (result) {
           var jf = new JSONFormatter((result.toJSON ? result.toJSON() : result), 'pre');
           $('#results').text(result.toJSON || _.isObject(result)? jf.formatJSON() : result);
         } else $('#results').text('No response body. Check your Firebug/Developer Tools Javascript Console.');
-
+        console.log(result);
         if (s) s(result);
         return result;
       },
       error: function(model, response) {
         txt = txt || '';
-        console.debug('------- ' + txt + ' error start-----');
+        console.log('------- ' + txt + ' error start-----');
         if (response) {
           var jf = new JSONFormatter(response, 'pre');
           $('#results').text(jf.formatJSON());
@@ -142,7 +142,7 @@
       // save  할 때는 위의 함수가 잘 안 먹는다. 
       success: function(result) {
         txt = txt || '';
-        console.debug('------- ' + txt + ' success start-----');
+        console.log('------- ' + txt + ' success start-----');
         if (result) {
           var jf = new JSONFormatter((result.toJSON ? result.toJSON() : result), 'pre');
           $('#results').text(result.toJSON || _.isObject(result)? jf.formatJSON() : result);
@@ -153,7 +153,7 @@
       },
       error: function(model, response) {
         txt = txt || '';
-        console.debug('------- ' + txt + ' error start-----');
+        console.log('------- ' + txt + ' error start-----');
         if (response) {
           var jf = new JSONFormatter(response, 'pre');
           $('#results').text(jf.formatJSON());
@@ -177,6 +177,8 @@
     q.equals('posts_id', posts_id);
     //q.select('sm_owner').select('text').select('imageurl').select('comments').select('comments.*');
     posts.query(q,StackMobExamples.debugCallback('Getting Post Objects', function(result){
+      //console.log(result.toJSON()[0]);
+      debug_post_result = result[0];
       var template = $("#mustache_post_read").html();
       //result[0];
       var viewxx  = result[0];
@@ -189,11 +191,21 @@
         }
         //return moment(this.createddate).format('LLL'); } 
       }}
-      console.debug(viewxx);
+      console.log(viewxx);
       var output = Mustache.render(template, viewxx);
       $("#post_read_container").html(output);
     }));
-    
+    posts.query(q,{
+      success: function(collection, response, options) {
+        console.log(collection.toJSON());
+        aaa = collection.toJSON();
+        /*
+          Outputs:
+     
+          [ { username: 'person a', age: 30, ...}, { username: 'person b', age: 30, ...}, { username: 'person c', age: 30, ...}]
+        */
+      }
+    });
  
   };
 
@@ -303,10 +315,10 @@
 
     /*
     user.login(false, StackMobExamples.debugCallback('Logging in.', function(model) {
-      console.debug(model);
+      console.log(model);
       globaluser=model;
     }, function(model, response) {
-      console.debug(response);
+      console.log(response);
     }));
   */
   };
@@ -367,7 +379,7 @@
         var user = new StackMob.User({ username: 'oauthtestuser', password: 'oauthtestpassword' });
         user.create({
           success: function(model) {
-            console.debug('USER CREATED');
+            console.log('USER CREATED');
           }
         });
       });
